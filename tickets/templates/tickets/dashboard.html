@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Helpdesk Dashboard</h2>
+
+    <div class="row mt-4">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Tickets</h5>
+                    <p class="card-text">{{ total_tickets }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Assigned</h5>
+                    <p class="card-text">{{ assigned_count }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Unassigned</h5>
+                    <p class="card-text">{{ unassigned_count }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h4>Tickets by Status</h4>
+            <ul class="list-group">
+                {% for item in tickets_by_status %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.status }}
+                    <span class="badge bg-primary rounded-pill">{{ item.count }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h4>Tickets by Priority</h4>
+            <ul class="list-group">
+                {% for item in tickets_by_priority %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    {{ item.priority }}
+                    <span class="badge bg-danger rounded-pill">{{ item.count }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <a href="{% url 'ticket_list' %}" class="btn btn-secondary mt-4">Back to Tickets</a>
+</div>
+{% endblock %}

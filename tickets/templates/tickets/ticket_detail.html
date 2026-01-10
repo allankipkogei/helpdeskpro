@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Ticket Details</h2>
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <td>{{ ticket.title }}</td>
+        </tr>
+        <tr>
+            <th>Description</th>
+            <td>{{ ticket.description }}</td>
+        </tr>
+        <tr>
+            <th>Category</th>
+            <td>{{ ticket.category }}</td>
+        </tr>
+        <tr>
+            <th>Priority</th>
+            <td>{{ ticket.priority }}</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td>{{ ticket.status }}</td>
+        </tr>
+        <tr>
+            <th>Assigned To</th>
+            <td>{{ ticket.assigned_to.username if ticket.assigned_to else 'Not assigned' }}</td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td>{{ ticket.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        <tr>
+            <th>Last Updated</th>
+            <td>{{ ticket.updated_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+    </table>
+
+    <a href="{% url 'ticket_list' %}" class="btn btn-secondary">Back to My Tickets</a>
+</div>
+{% endblock %}
