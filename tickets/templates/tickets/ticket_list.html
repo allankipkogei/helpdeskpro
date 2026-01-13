@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0">My Tickets</h2>
+            <small class="text-muted">Track and manage your submitted requests</small>
+        </div>
+        <a href="{% url 'create_ticket' %}" class="btn btn-primary">
+            + New Ticket
+        </a>
+    </div>
+
+    {% if tickets %}
+    <div class="card shadow-sm">
+        <div class="card-body p-0">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Created</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ticket in tickets %}
+                    <tr>
+                        <td class="fw-semibold">{{ ticket.title }}</td>
+                        <td>{{ ticket.category }}</td>
+
+                        <!-- Priority Badge -->
+                        <td>
+                            <span class="badge
+                                {% if ticket.priority == 'High' %}bg-danger
+                                {% elif ticket.priority == 'Medium' %}bg-warning
+                                {% else %}bg-success{% endif %}">
+                                {{ ticket.priority }}
+                            </span>
+                        </td>
+
+                        <!-- Status Badge -->
+                        <td>
+                            <span class="badge
+                                {% if ticket.status == 'Open' %}bg-warning
+                                {% elif ticket.status == 'In Progress' %}bg-info
+                                {% elif ticket.status == 'Resolved' %}bg-success
+                                {% else %}bg-secondary{% endif %}">
+                                {{ ticket.status }}
+                            </span>
+                        </td>
+
+                        <td>{{ ticket.created_at|date:"M d, Y H:i" }}</td>
+
+                        <td class="text-end">
+                            <a href="{% url 'ticket_detail' ticket.id %}"
+                               class="btn btn-outline-primary btn-sm">
+                                View
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% else %}
+    <!-- Empty State -->
+    <div class="text-center py-5">
+        <h5 class="text-muted">No tickets yet</h5>
+        <p class="text-muted mb-3">
+            You haven’t submitted any support requests.
+        </p>
+        <a href="{% url 'create_ticket' %}" class="btn btn-primary">
+            Create Your First Ticket
+        </a>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}

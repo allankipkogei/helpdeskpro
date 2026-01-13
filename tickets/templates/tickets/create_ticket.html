@@ -1,0 +1,87 @@
+<div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+
+        <form method="post" class="card shadow-sm border-0 p-4 p-md-5">
+            {% csrf_token %}
+
+            <!-- Header -->
+            <div class="mb-4">
+                <h4 class="fw-bold mb-1">Create Support Ticket</h4>
+                <p class="text-muted mb-0">
+                    Provide clear and accurate information so the IT team can resolve your issue efficiently.
+                </p>
+            </div>
+
+            <hr class="mb-4">
+
+            <!-- Title -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Issue Title
+                </label>
+                <input
+                    type="text"
+                    name="title"
+                    class="form-control form-control-lg"
+                    placeholder="e.g. Unable to access email"
+                    required>
+                <div class="form-text">
+                    Keep it short and descriptive.
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="mb-4">
+                <label class="form-label fw-semibold">
+                    Issue Description
+                </label>
+                <textarea
+                    name="description"
+                    class="form-control"
+                    rows="5"
+                    placeholder="Explain what happened, when it started, and any error messages you saw"
+                    required></textarea>
+            </div>
+
+            <!-- Category & Priority -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Category
+                    </label>
+                    <select name="category" class="form-select" required>
+                        <option value="">Select a category</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Priority
+                    </label>
+                    <select name="priority" class="form-select">
+                        <option value="Low">Low</option>
+                        <option value="Medium" selected>Medium</option>
+                        <option value="High">High</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                <a href="{% url 'ticket_list' %}" class="btn btn-outline-secondary px-4">
+                    Cancel
+                </a>
+                <button type="submit" class="btn btn-primary px-4">
+                    Submit Ticket
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>

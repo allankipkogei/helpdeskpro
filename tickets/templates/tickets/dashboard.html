@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Page Header -->
+    <div class="mb-4">
+        <h2 class="fw-bold mb-0">Helpdesk Dashboard</h2>
+        <small class="text-muted">Overview of ticket activity and workload</small>
+    </div>
+
+    <!-- KPI Cards -->
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Total Tickets</h6>
+                    <h2 class="fw-bold">{{ total_tickets }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Assigned Tickets</h6>
+                    <h2 class="fw-bold text-success">{{ assigned_count }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0">
+                <div class="card-body text-center">
+                    <h6 class="text-muted">Unassigned Tickets</h6>
+                    <h2 class="fw-bold text-warning">{{ unassigned_count }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Breakdown Section -->
+    <div class="row mt-5 g-4">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-3">Tickets by Status</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for item in tickets_by_status %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ item.status }}
+                            <span class="badge bg-primary rounded-pill">
+                                {{ item.count }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h5 class="fw-semibold mb-3">Tickets by Priority</h5>
+                    <ul class="list-group list-group-flush">
+                        {% for item in tickets_by_priority %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ item.priority }}
+                            <span class="badge bg-danger rounded-pill">
+                                {{ item.count }}
+                            </span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <div class="mt-4">
+        <a href="{% url 'ticket_list' %}" class="btn btn-outline-secondary">
+            ← Back to Tickets
+        </a>
+    </div>
+
+</div>
+{% endblock %}
